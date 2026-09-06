@@ -1,0 +1,161 @@
+{
+  "ClassName": "Folder",
+  "Children": [
+    {
+      "Name": "Default",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "Intro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "rbxassetid://118754269860019",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Outro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "rbxassetid://118754269860019",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Theme",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.35,
+            "PlaybackSpeed": 1,
+            "Looped": true,
+            "PlayOnRemove": false
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Green",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "Intro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Outro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Theme",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.35,
+            "PlaybackSpeed": 1,
+            "Looped": true,
+            "PlayOnRemove": false
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Yellow",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "Intro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Outro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Theme",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "rbxassetid://1842253238",
+            "Volume": 0.35,
+            "PlaybackSpeed": 1,
+            "Looped": true,
+            "PlayOnRemove": false
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Red",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "Intro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Outro",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.6,
+            "PlaybackSpeed": 1,
+            "Looped": false,
+            "PlayOnRemove": false
+          }
+        },
+        {
+          "Name": "Theme",
+          "ClassName": "Sound",
+          "Properties": {
+            "SoundId": "",
+            "Volume": 0.35,
+            "PlaybackSpeed": 1,
+            "Looped": true,
+            "PlayOnRemove": false
+          }
+        }
+      ]
+    }
+  ]
+}

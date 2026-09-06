@@ -1,0 +1,24 @@
+{
+  "name": "RegionSystem",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "$ignoreUnknownInstances": true,
+      "RegionSystem": {
+        "$path": "src/RegionSystem"
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "$ignoreUnknownInstances": true,
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "$ignoreUnknownInstances": true,
+        "RegionClient": {
+          "$path": "src/RegionClient.client.luau"
+        }
+      }
+    }
+  }
+}

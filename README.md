@@ -1,26 +1,30 @@
-# RegionSystem
+# LandMark
+
+A Roblox region system with animated banners, optional music, and per-player lighting.
+
+**[Play the LandMark Showcase on Roblox](https://www.roblox.com/games/130107249243262/landMark-Showcase)**
 
 ![Region banner preview](docs/region-banner.jpg)
 
-Roblox için oyuncuya özel bölge sistemi. Giriş ve çıkış bildirimleri ekranın üst orta bölümünde, şeffaf arka planla gösterilir. Büyük bölge adının altında, iki yana uzanan düz çizgilerin ortasında 45 derece döndürülmüş kare biçiminde bir elmas bulunur; açıklama bu ayırıcının altındadır. Hazır ekran metinleri İngilizcedir. Giriş müziği, çıkış müziği, bölge içinde döngüde çalan tema ve özel Lighting ayarları birbirinden bağımsız açılıp kapatılabilir.
+Entry and exit banners appear at the top center of the screen with a transparent background. A large region name sits above a diamond framed by two horizontal lines, with the description underneath. All interface text is in English. Entry sounds, exit sounds, looping region themes, and custom lighting can each be enabled independently.
 
-## Kurulum
+## Installation
 
-- `ReplicatedStorage.RegionSystem`: `src/RegionSystem/init.luau` içeriğini taşıyan **ModuleScript**.
-- `ReplicatedStorage.RegionSystem.Config`: `src/RegionSystem/Config.luau` içeriğini taşıyan, ana modülün altındaki **ModuleScript**.
-- `ReplicatedStorage.RegionSystem.Audio`: `src/RegionSystem/Audio.model.json` içindeki yapıya ve özelliklere göre oluşturulan ses klasörü; içindeki şablonlar **Sound** nesneleridir.
-- `StarterPlayer.StarterPlayerScripts.RegionClient`: `src/RegionClient.client.luau` içeriğini taşıyan **LocalScript**.
-- `Workspace.Regions`: Studio'da oluşturacağın bölge parçalarını içeren klasör. Alt klasörlerdeki `BasePart` nesneleri de taranır.
+- `ReplicatedStorage.RegionSystem`: a **ModuleScript** containing `src/RegionSystem/init.luau`.
+- `ReplicatedStorage.RegionSystem.Config`: a child **ModuleScript** containing `src/RegionSystem/Config.luau`.
+- `ReplicatedStorage.RegionSystem.Audio`: a folder containing **Sound** templates, using the structure and properties in `src/RegionSystem/Audio.model.json`.
+- `StarterPlayer.StarterPlayerScripts.RegionClient`: a **LocalScript** containing `src/RegionClient.client.luau`.
+- `Workspace.Regions`: a folder containing your region parts. `BasePart` objects inside subfolders are included.
 
-Her bölge parçasına **String** türünde `RegionId` attribute'u ekle. Hazır ayarlar için değeri `Green`, `Yellow` veya `Red` yap. Parçanın adı önemli değildir; ekranda gösterilen ad Config içindeki `Name` alanıdır. Aynı `RegionId` değerini kullanan parçalar tek bölge sayılır. Bir parçayı kapatmak için ona **Boolean** türünde `Enabled = false` attribute'u ekle; açmak için `true` yap veya attribute'u kaldır.
+Add a **String** attribute named `RegionId` to each region part. Use `Green`, `Yellow`, or `Red` for the included presets. Part names do not matter: the banner uses the `Name` field in Config. Parts sharing a `RegionId` act as one region. To disable a part, add a **Boolean** attribute named `Enabled` and set it to `false`; set it to `true` or remove the attribute to enable it again.
 
-Görünmez ve içinden geçilebilir alanlar için parçaları `Anchored = true`, `CanCollide = false`, `Transparency = 1` yapabilirsin. `RegionId` yoksa parça bağımsız bir bölge olur ve `Defaults` kullanılır. Config'de karşılığı olmayan ID'ler de `Defaults` kullanır.
+For invisible, nonblocking volumes, set `Anchored = true`, `CanCollide = false`, and `Transparency = 1`. A part without a `RegionId` becomes an independent region using `Defaults`. IDs without a matching Config entry also use `Defaults`.
 
-`default.project.json`, kodu ve ses şablonlarını bu Studio yollarına eşleyen isteğe bağlı Rojo proje dosyasıdır. Bölge parçalarını içermez; onları Studio'da oluştur.
+The optional Rojo project, `default.project.json`, maps the scripts and sound templates to these Studio locations. Create your region parts in Studio; they are not included in the project file.
 
-## Ayarlar
+## Configuration
 
-`Config.Regions.Green` gibi bir bölge kaydını düzenle veya yeni bir anahtar ekleyip parçalara aynı `RegionId` değerini ver:
+Edit an entry such as `Config.Regions.Green`, or add a new key and give your parts the matching `RegionId`:
 
 ```lua
 Green = {
@@ -41,15 +45,15 @@ Green = {
 }
 ```
 
-`Intro` ve `Outro` ekran bildirimleridir; müzikleri ayrı alanlarla yönetilir. Her özellikte `Enabled = false` kullanabilir veya özelliği tamamen `false` yapabilirsin: `Theme = false`, `Lighting = false`, `Intro = false` gibi. Bir alanı kaldırmak onu kapatmaz; `Defaults` değerine döndürür. İç içe tablolar birleştirilmez.
+`Intro` and `Outro` control the visual banners; their sounds have separate settings. Disable any feature with `Enabled = false` or set the entire feature to `false`, such as `Theme = false`, `Lighting = false`, or `Intro = false`. Removing a field falls back to `Defaults`, which may leave that feature enabled. Nested tables are not merged.
 
-Lighting için `Ambient`, `OutdoorAmbient`, `Brightness`, `ClockTime`, `FogColor`, `FogStart`, `FogEnd`, `ExposureCompensation`, `ColorShift_Top` ve `ColorShift_Bottom` desteklenir. Bölgeden çıkınca değiştirilen değerler eski haline döner. `LightingTransition` ışık geçişini saniye olarak belirler.
+Supported lighting properties are `Ambient`, `OutdoorAmbient`, `Brightness`, `ClockTime`, `FogColor`, `FogStart`, `FogEnd`, `ExposureCompensation`, `ColorShift_Top`, and `ColorShift_Bottom`. Overridden values are restored when the player leaves. `LightingTransition` sets the transition duration in seconds.
 
-Bildirimde başlık ve açıklama kısa bir arayla kayarak belirir; elmas büyüyüp dönerken çizgiler merkezden dışarı uzar. Kapanışta çizgiler merkeze toplanır ve yazılar kaybolur. Çıkış bildiriminde kayma ve dönüş yönü tersine döner. `FadeTime`, bu Tween animasyonlarının açılış ve kapanış sürelerini saniye olarak belirler; `0` yapıldığında geçiş anlık olur. Yeni bir bölge geçişi önceki bildirimin animasyonlarını iptal eder.
+TweenService animates the title and description with staggered slides and fades. The diamond scales and rotates while the lines extend outward from the center. At the end, the lines retract and the text fades away. Exit banners reverse the panel motion and diamond rotation. `FadeTime` sets the opening and closing animation duration in seconds; use `0` for instant transitions. A new region transition cancels the previous banner's animations.
 
-## Sesler
+## Audio
 
-Sesleri Explorer'da doğrudan modülün altından düzenle:
+Edit the sounds directly beneath the module in Explorer:
 
 ```text
 ReplicatedStorage.RegionSystem.Audio
@@ -71,21 +75,21 @@ ReplicatedStorage.RegionSystem.Audio
    └─ Theme (Sound)
 ```
 
-`Default`, `Green`, `Yellow` ve `Red` birer **Folder** nesnesidir. Bölge klasörünün adı `RegionId` ile eşleşir. İstediğin Sound nesnesinin `SoundId`, `Volume` ve `PlaybackSpeed` özelliklerini Properties üzerinden değiştir; ses efektlerini de bu nesnenin altına ekleyebilirsin. Kendi seslerin için deneyimin kullanma izni olan Roblox varlıklarını kullan.
+`Default`, `Green`, `Yellow`, and `Red` are **Folder** objects. Each region folder name matches its `RegionId`. Set a Sound's `SoundId`, `Volume`, and `PlaybackSpeed` in Properties, and add sound effects as its children. Use Roblox audio assets that your experience has permission to play.
 
-Bölgesel sesin `SoundId` alanı boşsa aynı türdeki `Default` sesi kullanılır: örneğin `Green.Intro` boşken `Default.Intro` devreye girer. Hazır ayarda `Default.Intro` ve `Default.Outro` için ses atanmıştır; Config'de giriş ve çıkış müzikleri açıktır. Yellow bölgesinin tema sesi atanmış ve açıktır; diğer bölgelerin temaları kapalıdır. Tema eklemek için bölgenin veya `Default` klasörünün `Theme.SoundId` alanını doldurup Config'de ilgili `Theme.Enabled` değerini `true` yap.
+If a region sound has an empty `SoundId`, the matching `Default` sound is used. For example, an empty `Green.Intro` falls back to `Default.Intro`. The included `Default.Intro` and `Default.Outro` have audio assigned, and entry and exit sounds are enabled in Config. Yellow also has an assigned, enabled theme; the other region themes are disabled. To add a theme, set `Theme.SoundId` in the region folder or `Default`, then set the corresponding `Theme.Enabled` to `true` in Config.
 
-Config'deki `IntroMusic.Enabled`, `OutroMusic.Enabled` ve `Theme.Enabled` yalnızca açma/kapamayı yönetir. Geriye uyumluluk için Config'de açıkça verilen `Volume`, oynatma sesinin düzeyini değiştirir. Config'de dolu bir `SoundId` verilirse şablondan bağımsız bir Sound oluşturulur; şablonun efektleri ve `PlaybackSpeed` değeri bu eski kullanımda aktarılmaz.
+`IntroMusic.Enabled`, `OutroMusic.Enabled`, and `Theme.Enabled` control whether each sound plays. For backward compatibility, an explicit `Volume` in Config overrides the template volume. A nonempty `SoundId` in Config creates a standalone Sound; this legacy path does not copy the template's effects or `PlaybackSpeed`.
 
-Modül seçilen Sound şablonunu efektleri ve ses özellikleriyle birlikte `SoundService` içine kopyalar; modül altındaki asılları oynatmaz veya değiştirmez. Giriş ve çıkış sesleri tek seferliktir; tema yalnızca içeride döngüde çalar. Geçişte önceki oynatma kopyaları temizlenir. Tek seferlik seslerde temizlik sınırı 120 saniyedir.
+The module clones the selected Sound template, including its effects and audio properties, into the local `SoundService`. Original templates stay untouched beneath the module. Entry and exit sounds play once, while the theme loops for as long as the player stays inside. Previous playback clones are cleaned up during transitions. One-shot sounds have a cleanup timeout of 120 seconds.
 
-## Çalışma ve API
+## Behavior and API
 
-Varsayılan `CheckInterval = 0.1` ile karakterin gövde parçalarının bölge hacmiyle teması kontrol edilir. Aksesuarlar ve eldeki araçlar tetiklemez. Aynı bölge içinde giriş tekrarlanmaz; tamamen çıkıp tekrar girince yeniden tetiklenir. Birden fazla bölgeyle temas varsa en yüksek `Priority` seçilir. Eşit öncelikte mevcut bölge korunur. Doğrudan bölge değişiminde önce eski bölgenin çıkış bildirimi, ardından yenisinin giriş bildirimi gösterilir.
+With the default `CheckInterval = 0.1`, the module checks whether the character's body parts overlap a region volume every 0.1 seconds. Accessories and equipped tools do not trigger regions. Entry fires once while the player remains inside, and fires again after leaving and reentering. When regions overlap, the highest `Priority` wins; ties keep the current region. Moving directly between regions shows the old region's exit banner followed by the new region's entry banner.
 
-Efektler her oyuncunun kendi istemcisinde çalışır. Bu görsel ve işitsel davranışlar için RemoteEvent gerekmez. Modül istemcide yüklendiğinde `Entered` ve `Exited` adlı **BindableEvent** nesneleri `ReplicatedStorage.RegionSystem` altında oluşturulur; sunucuya veya diğer oyunculara iletilmez.
+Effects run on each player's client. These visual and audio features do not require RemoteEvents. When loaded on the client, the module creates **BindableEvent** objects named `Entered` and `Exited` under `ReplicatedStorage.RegionSystem`. These local events do not replicate to the server or other players.
 
-Bir LocalScript içinden:
+From a LocalScript:
 
 ```lua
 local RegionSystem = require(game:GetService("ReplicatedStorage"):WaitForChild("RegionSystem"))
@@ -101,13 +105,13 @@ end)
 RegionSystem.Start()
 ```
 
-Hazır `RegionClient` zaten `Start()` çağırır. `GetCurrentRegion()` aktif bölge için `regionId, config, part`, dışarıdaysa `nil` döndürür. `Stop()` taramayı durdurur, arayüzü ve sesleri temizler, ışığı geri yükler; tekrar `Start()` çağrılabilir. Ölümde efektler temizlenir ve yeniden doğuşta tarama devam eder.
+The included `RegionClient` already calls `Start()`. `GetCurrentRegion()` returns `regionId, config, part` for the active region, or `nil` when outside all regions. `Stop()` disconnects detection, removes the UI and sounds, and restores lighting. Call `Start()` again to restart. Character death clears the effects, and detection continues after respawning.
 
-## Test
+## Testing
 
-`tests/RegionSystem.spec.luau`, Play modunda bir LocalScript üzerinden çalıştırılan 27 kontrol içerir. Giriş/çıkış, bölge önceliği, döndürülmüş parçalar, ortak kimlik, ışığın geri yüklenmesi, ses yaşam döngüsü, kapatma ve yeniden başlatma denetlenir. Ses testleri Roblox'un yerleşik seslerini sıfır ses düzeyinde kullanır; kendi müziklerinin deneyim izinlerini ayrıca doğrula.
+`tests/RegionSystem.spec.luau` contains 27 runtime checks, run from a LocalScript in Studio Play mode. They cover entry and exit, region priority, rotated parts, shared region IDs, lighting restoration, audio cleanup, stopping, and restarting. Audio checks use built-in Roblox sounds at zero volume; verify experience permissions separately for your own audio assets.
 
-Test dosyasını `ReplicatedStorage.RegionSystemTest` adlı bir ModuleScript'e aktar. Bir test LocalScript'inde çalıştır:
+Copy the test file into a ModuleScript named `ReplicatedStorage.RegionSystemTest`, then run it from a test LocalScript:
 
 ```lua
 local run = require(game:GetService("ReplicatedStorage").RegionSystemTest)
@@ -115,4 +119,4 @@ local result = run()
 print(result.passed, result.failure)
 ```
 
-Test sırasında karakter geçici olarak taşınır; sonunda konumu, ayarlar ve oluşturulan test parçaları temizlenir. Testi Studio Play oturumunda çalıştır; test ModuleScript'ini ve çağıran LocalScript'i yayımlanacak oyuna ekleme.
+The test temporarily moves the character, then restores its position and settings and removes the test fixtures. Run it in a Studio Play session. Keep the test ModuleScript and its runner out of the published game.
